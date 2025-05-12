@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { execSync } from 'node:child_process'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 
