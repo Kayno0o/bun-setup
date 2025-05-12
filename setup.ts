@@ -9,25 +9,31 @@ execSync('bun init -y', { stdio: 'inherit' })
 // .vscode/settings.json
 mkdirSync('.vscode', { recursive: true })
 writeFileSync('.vscode/settings.json', JSON.stringify({
-  'eslint.useFlatConfig': true,
+  // Disable the default formatter, use eslint instead
   'prettier.enable': false,
   'editor.formatOnSave': false,
+
+  // Auto fix
   'editor.codeActionsOnSave': {
-    'source.fixAll.eslint': 'always',
+    'source.fixAll.eslint': 'explicit',
     'source.organizeImports': 'never',
   },
+
+  // Silent the stylistic rules in you IDE, but still auto fix them
   'eslint.rules.customizations': [
-    { rule: 'style/*', severity: 'off' },
-    { rule: 'format/*', severity: 'off' },
-    { rule: '*-indent', severity: 'off' },
-    { rule: '*-spacing', severity: 'off' },
-    { rule: '*-spaces', severity: 'off' },
-    { rule: '*-order', severity: 'off' },
-    { rule: '*-dangle', severity: 'off' },
-    { rule: '*-newline', severity: 'off' },
-    { rule: '*quotes', severity: 'off' },
-    { rule: '*semi', severity: 'off' },
+    { rule: 'style/*', severity: 'off', fixable: true },
+    { rule: 'format/*', severity: 'off', fixable: true },
+    { rule: '*-indent', severity: 'off', fixable: true },
+    { rule: '*-spacing', severity: 'off', fixable: true },
+    { rule: '*-spaces', severity: 'off', fixable: true },
+    { rule: '*-order', severity: 'off', fixable: true },
+    { rule: '*-dangle', severity: 'off', fixable: true },
+    { rule: '*-newline', severity: 'off', fixable: true },
+    { rule: '*quotes', severity: 'off', fixable: true },
+    { rule: '*semi', severity: 'off', fixable: true },
   ],
+
+  // Enable eslint for all supported languages
   'eslint.validate': [
     'javascript',
     'javascriptreact',
@@ -40,15 +46,16 @@ writeFileSync('.vscode/settings.json', JSON.stringify({
     'jsonc',
     'yaml',
     'toml',
-    'css',
-    'tailwindcss',
     'xml',
     'gql',
     'graphql',
     'astro',
+    'svelte',
+    'css',
     'less',
     'scss',
     'pcss',
+    'tailwindcss',
     'postcss',
     'github-actions-workflow',
   ],
