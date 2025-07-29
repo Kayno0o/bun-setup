@@ -8,17 +8,18 @@
     "bun-setup": "setup.ts"
   },
   "scripts": {
-    "lint:fix": "bunx --bun eslint --fix"
+    "lint:fix": "bunx eslint --fix"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@kaynooo/utils": "^1.2.11"
+    "@kaynooo/utils": "^1.2.22",
+    "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@kaynooo/eslint": "^1.1.6",
+    "@kaynooo/eslint": "^1.1.13",
     "@types/bun": "latest",
-    "eslint": "^9.26.0"
+    "eslint": "^9.31.0"
   }
 }
