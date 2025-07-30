@@ -50,7 +50,7 @@ writeFileSync('.vscode/settings.json', JSON.stringify({
 
   // Auto fix
   'editor.codeActionsOnSave': {
-    'source.fixAll.eslint': 'explicit',
+    'source.fixAll.eslint': 'always',
     'source.organizeImports': 'never',
   },
 
