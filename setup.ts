@@ -3,7 +3,6 @@
 import type { ExecSyncOptionsWithBufferEncoding } from 'node:child_process'
 import { execSync as execSyncFn } from 'node:child_process'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { createServer } from 'node:net'
 import { select } from '@clack/prompts'
 import { declareLogger } from '@kaynooo/utils'
 import { setupPath } from './astroPath'
