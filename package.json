@@ -8,18 +8,20 @@
     "bun-setup": "setup.ts"
   },
   "scripts": {
+    "check": "tsgo --noEmit --strict",
+    "lint": "bunx eslint",
     "lint:fix": "bunx eslint --fix"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "@kaynooo/utils": "^1.2.22"
+    "@clack/prompts": "^0.11.0",
+    "@kaynooo/utils": "^1.6.6"
   },
   "devDependencies": {
-    "@kaynooo/eslint": "^1.1.13",
-    "@types/bun": "latest",
-    "eslint": "^9.31.0"
+    "@kaynooo/eslint": "^1.4.0",
+    "@types/bun": "^1.3.0",
+    "eslint": "^9.38.0"
   }
 }

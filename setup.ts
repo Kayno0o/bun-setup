@@ -4,7 +4,7 @@ import type { ExecSyncOptionsWithBufferEncoding } from 'node:child_process'
 import { execSync as execSyncFn } from 'node:child_process'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { select } from '@clack/prompts'
-import { declareLogger } from '@kaynooo/utils'
+import { declareLogger } from '@kaynooo/utils/builders'
 import { setupPath } from './astroPath'
 import { setupPort } from './astroPort'
 
@@ -106,7 +106,7 @@ writeFileSync('.vscode/settings.json', JSON.stringify({
 writeFileSync('eslint.config.js', `import { typescript } from '@kaynooo/eslint'\n\nexport default typescript()\n`)
 
 // deps
-execSync('bun add -D eslint @kaynooo/eslint')
+execSync('bun add -D eslint @kaynooo/eslint @typescript/native-preview husky')
 execSync('bun add @kaynooo/utils')
 
 if (isAstro) {
@@ -124,6 +124,8 @@ if (isAstro) {
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8'))
 
 pkg.scripts ??= {}
+pkg.scripts['check'] = 'tsgo --noEmit --strict'
+pkg.scripts['lint'] = 'bunx eslint'
 pkg.scripts['lint:fix'] = 'bunx eslint --fix'
 
 if (isAstro) {
@@ -137,5 +139,26 @@ if (isAstro) {
 
 writeFileSync('package.json', JSON.stringify(pkg, null, 2))
 
-// lint fix
-execSync('bun run lint:fix')
+writeFileSync('.husky/pre-commit', `#!/bin/sh
+
+BUN_PATH=bun
+
+if [ -f ~/.bun/bin/bun ]; then
+  BUN_PATH=~/.bun/bin/bun
+elif [ -f /usr/local/bin/bun ]; then
+  BUN_PATH=/usr/local/bin/bun
+fi
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(json|ts)$' | tr '\n' ' ')
+
+if [ -n "$STAGED_FILES" ]; then
+  if command -v eslint_d &> /dev/null; then
+    eslint_d --cache $STAGED_FILES
+  else
+    $BUN_PATH eslint --cache $STAGED_FILES
+  fi
+fi
+
+$BUN_PATH run build
+$BUN_PATH run check
+`)
