@@ -46,6 +46,7 @@ writeFileSync('.vscode/settings.json', JSON.stringify({
   // Disable the default formatter, use eslint instead
   'prettier.enable': false,
   'editor.formatOnSave': false,
+  'typescript.experimental.useTsgo': true,
 
   // Auto fix
   'editor.codeActionsOnSave': {
@@ -96,9 +97,9 @@ writeFileSync('.vscode/settings.json', JSON.stringify({
 
   ...(isAstro
     ? { 'files.associations': {
-        '*.embeddedhtml': 'html',
-        '*.css': 'tailwindcss',
-      } }
+      '*.embeddedhtml': 'html',
+      '*.css': 'tailwindcss',
+    } }
     : {}),
 }, null, 2))
 
@@ -124,8 +125,8 @@ if (isAstro) {
 const pkg = JSON.parse(readFileSync('package.json', 'utf-8'))
 
 pkg.scripts ??= {}
-pkg.scripts['check'] = 'tsgo --noEmit --strict'
-pkg.scripts['lint'] = 'bunx eslint'
+pkg.scripts.check = 'tsgo --noEmit --strict'
+pkg.scripts.lint = 'bunx eslint'
 pkg.scripts['lint:fix'] = 'bunx eslint --fix'
 
 if (isAstro) {
